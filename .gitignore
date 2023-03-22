@@ -1,3 +1,6 @@
 node_modules
 flask_server/MovieLensDataset
 notebook/TheMoviesDataset
+notebook/ratings_data.ipynb
+notebook/testing_data.ipynb
+notebook/training_data.ipynb
