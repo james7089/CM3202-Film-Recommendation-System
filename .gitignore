@@ -1,6 +1,2 @@
 node_modules
-flask_server/MovieLensDataset
-notebook/TheMoviesDataset
-/notebook/ratings_data.csv
-/notebook/testing_data.csv
-/notebook/training_data.csv
+**/*.csv
