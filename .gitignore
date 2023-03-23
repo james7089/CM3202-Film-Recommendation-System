@@ -1,2 +1,5 @@
 node_modules
 **/*.csv
+/src/backend/__pycache__
+/src/backend/Pipfile
+/src/backend/Pipfile.lock
