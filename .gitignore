@@ -3,3 +3,4 @@ node_modules
 /src/backend/__pycache__
 /src/backend/Pipfile
 /src/backend/Pipfile.lock
+/src/backend/.env
