@@ -1,28 +1,20 @@
-node_modules
 
+#notebook
 **/*.csv
-/web_app/backend/Pipfile
-/web_app/backend/Pipfile.lock
+
+#frontend
+/web_app/frontend/node_modules/
+
+#backend
+/web_app/backend/__pycache__/
+/web_app/backend/auth/__pycache__/
+/web_app/backend/config/__pycache__/
+/web_app/backend/database/__pycache__/
+/web_app/backend/models/__pycache__/
+/web_app/backend/routes/__pycache__/
+/web_app/backend/venv
+/web_app/backend/.env.dev
 
 
-# dependencies
-/web_app/frontend/node_modules
-/web_app/frontend/.pnp
-/web_app/frontend/.pnp.js
 
-# testing
-/web_app/frontend/coverage
 
-# production
-/web_app/frontend/build
-
-# misc
-/web_app/frontend/.DS_Store
-/web_app/frontend/.env.local
-/web_app/frontend/.env.development.local
-/web_app/frontend/.env.test.local
-/web_app/frontend/.env.production.local
-
-/web_app/frontend/npm-debug.log*
-/web_app/frontend/yarn-debug.log*
-/web_app/frontend/yarn-error.log*
