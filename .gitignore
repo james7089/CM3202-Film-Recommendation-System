@@ -9,9 +9,12 @@
 /web_app/backend/__pycache__/
 /web_app/backend/auth/__pycache__/
 /web_app/backend/config/__pycache__/
+/web_app/backend/config/.env/
 /web_app/backend/database/__pycache__/
 /web_app/backend/models/__pycache__/
 /web_app/backend/routes/__pycache__/
+/web_app/backend/schemas/__pycache__/
+/web_app/backend/users/__pycache__/
 /web_app/backend/venv
 /web_app/backend/.env.dev
 

@@ -1,11 +1,10 @@
 from typing import Optional
 
 from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseSettings
+from motor.motor_asyncio import AsyncIOMotorClient
 
-from models.admin import Admin
-from models.student import Student
+import os
 
 
 class Settings(BaseSettings):
@@ -14,16 +13,15 @@ class Settings(BaseSettings):
     DATABASE_NAME: Optional[str] = None
 
     # JWT
-    secret_key: str
-    algorithm: str = "HS256"
+    SECRET: Optional[str] = None
 
     class Config:
         case_sensitive = False
-        env_file = ".env.dev"
+        env_file = f"{os.path.dirname(os.path.abspath(__file__))}/../.env.dev"
         orm_mode = True
 
 
-async def initiate_database():
-    client = AsyncIOMotorClient(Settings().DATABASE_URL)
-    await init_beanie(database=client[Settings().DATABASE_NAME],
-                      document_models=[Admin, Student])
+async def initiate_database(db, User):
+    await init_beanie(database=db,
+                  document_models=[User])
+
