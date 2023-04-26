@@ -9,8 +9,8 @@ import { useLoginMutation } from './authApiSlice';
 const Login = () => {
     const userRef = useRef()
     const errRef = useRef()
-    const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
 
@@ -19,21 +19,20 @@ const Login = () => {
 
     useEffect(() => {
         userRef.current.focus()
-    },[])
+    }, [])
 
     useEffect(() => {
         setErrMsg('')
-    },[user,pwd])
+    },[email, password])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
-            const userData = await login({ user, pwd}).unwrap()
-            console.log(userData)
-            dispatch(setCredentials({ ...userData, user }))
-            setUser('')
-            setPwd('')
+            const accessToken = await login({ email, password }).unwrap()
+            dispatch(setCredentials({ email, accessToken }))
+            setEmail('')
+            setPassword('')
             navigate('/welcome')
         } catch (err) {
             if (!err?.originalStatus) {
@@ -50,9 +49,9 @@ const Login = () => {
         }
     }
 
-    const handleUserInput = (e) => setUser(e.target.value)
+    const handleEmailInput = (e) => setEmail(e.target.value)
 
-    const handlePwdInput = (e) => setPwd(e.target.value)
+    const handlePasswordInput = (e) => setPassword(e.target.value)
 
     const content = isLoading ? <h1>Loading...</h1> : (
         <section className="login">
@@ -61,13 +60,13 @@ const Login = () => {
             <h1>Employee Login</h1>
 
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="email">Email:</label>
                 <input
                     type="text"
-                    id="username"
+                    id="email"
                     ref={userRef}
-                    value={user}
-                    onChange={handleUserInput}
+                    value={email}
+                    onChange={handleEmailInput}
                     autoComplete="off"
                     required
                 />
@@ -76,8 +75,8 @@ const Login = () => {
                 <input
                     type="password"
                     id="password"
-                    onChange={handlePwdInput}
-                    value={pwd}
+                    onChange={handlePasswordInput}
+                    value={password}
                     required
                 />
                 <button>Sign In</button>

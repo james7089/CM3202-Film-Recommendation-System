@@ -10,13 +10,11 @@ const Welcome = () => {
 	const welcome = user ? `Welcome ${user}!` : 'Welcome!';
 	const tokenAbbr = `${token.slice(0, 9)}...`;
 	const content = (
-		<section className='welcome'>
+		<div>
 			<h1>{welcome}</h1>
 			<p>Token: {tokenAbbr}</p>
-			<p>
-				<Link to='/userslist'>Go to the Users List</Link>
-			</p>
-		</section>
+			<p><Link to="/user">Go to the User</Link></p>
+		</div>
 	);
 
 	return content;

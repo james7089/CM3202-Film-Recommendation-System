@@ -4,7 +4,7 @@ import Public from './components/Public';
 import Login from './features/auth/Login';
 import Welcome from './features/auth/Welcome';
 import RequireAuth from './features/auth/RequireAuth';
-//import UsersList from './features/users/UsersList';
+import User from './features/user/User';
 
 function App() {
 	return (
@@ -17,6 +17,7 @@ function App() {
 				{/* protected routes */}
 				<Route element={<RequireAuth />}>
 					<Route path='welcome' element={<Welcome />} />
+					<Route path='user' element={<User />} />
 				</Route>
 			</Route>
 		</Routes>
