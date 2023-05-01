@@ -1,4 +1,4 @@
-import { useGetUserQuery } from "./userApiSlice"
+import { useGetUserQuery } from "../../redux/features/userApiSlice";
 import { Link } from "react-router-dom";
 
 const User = () => {
@@ -18,7 +18,7 @@ const User = () => {
             <section className="user">
                 <h1>User</h1>
                 <div>{user.email}</div>
-                <Link to="/welcome">Back to Welcome</Link>
+                <Link to="/homePage">Back to Home Page</Link>
             </section>
         )
     } else if (isError) {

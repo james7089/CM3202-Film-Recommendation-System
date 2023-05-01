@@ -1,9 +1,9 @@
-import { apiSlice } from "../../app/api/apiSlice";
+import { apiSlice } from "./apiSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUser: builder.query({
-            query: () => '/protected',
+            query: () => '/user',
             keepUnusedDataFor: 5,
         })
     })

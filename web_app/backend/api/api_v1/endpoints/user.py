@@ -14,9 +14,8 @@ router = APIRouter(prefix="/user", tags=["User"])
 #response_model=UserOut
 
 @router.get("", response_model=UserOut)
-async def get_user(req: Request, user: User = Depends(current_user)):
+async def get_user(user: User = Depends(current_user)):
     """Returns the current user"""
-    print(req.headers)
     return user
 
 

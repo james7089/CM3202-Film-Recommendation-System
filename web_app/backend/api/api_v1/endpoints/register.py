@@ -13,7 +13,7 @@ from api.dependencies import hash_password
 router = APIRouter(prefix="/register", tags=["Register"])
 
 
-@router.post("", response_model=UserOut)
+@router.post("")
 async def user_registration(user_auth: UserAuth):
     """Creates a new user"""
     user = await User.by_email(user_auth.email)
@@ -22,7 +22,7 @@ async def user_registration(user_auth: UserAuth):
     hashed = hash_password(user_auth.password)
     user = User(email=user_auth.email, password=hashed)
     await user.create()
-    return user
+    return Response(status_code=200)
 
 
 @router.post("/forgot-password")

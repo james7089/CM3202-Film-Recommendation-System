@@ -1,0 +1,12 @@
+.login form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: #fff;
+  }
+  
+  .login input, .login button {
+    padding: 0.5em;
+    border-radius: 15px;
+  }
