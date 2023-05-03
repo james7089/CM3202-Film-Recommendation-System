@@ -1,3 +1,5 @@
+import './LoginStyle.css';
+
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,7 +15,7 @@ const RegisterForm = () => {
 	const [errMsg, setErrMsg] = useState('');
 	const navigate = useNavigate();
 
-	const [register, { isError, isLoading, error }] = useRegisterMutation();
+	const [register, { isLoading }] = useRegisterMutation();
 
 	useEffect(() => {
 		userRef.current.focus();

@@ -18,6 +18,10 @@ class Settings(BaseModel):
     authjwt_secret_key = config("ACCESS_TOKEN_SECRET")
     authjwt_token_location: set = {"headers", "cookies"}
     authjwt_cookie_csrf_protect: bool = False
+
+    #TMDB Settings
+    TMDB_BASE_URL = config("TMDB_BASE_URL")
+    TMDB_KEY = config("TMDB_KEY")
     
     SALT = config("SALT").encode()
 
