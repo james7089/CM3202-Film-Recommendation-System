@@ -1,29 +1,29 @@
 import { Box, Toolbar, Typography, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import PersonMediaGrid from '../components/common/PersonMediaGrid';
+import PersonMoviesGrid from '../components/common/PersonMoviesGrid';
 import tmdbConfigs from '../configs/tmdb.configs';
 import uiConfigs from '../configs/ui.configs';
 import Container from '../components/common/Container';
-import { useLazyGetDetailsQuery } from '../redux/features/castApiSlice';
+import { useLazyGetDetailQuery } from '../redux/features/personApiSlice';
 import FormBox from '../components/common/FormBox';
 
-const CastPage = () => {
+const PersonPage = () => {
 	const { personId } = useParams();
 
 	const [person, setPerson] = useState();
 
-	const [fetchDetails, { isLoading }] = useLazyGetDetailsQuery();
+	const [fetchDetail, { isLoading }] = useLazyGetDetailQuery();
 
 	useEffect(() => {
 		const getPerson = async () => {
-			const response = await fetchDetails({ personId }).unwrap();
+			const response = await fetchDetail({ personId }).unwrap();
 
 			if (response) setPerson(response);
 		};
 
 		getPerson();
-	}, [personId]);
+	}, [personId, fetchDetail]);
 
 	return isLoading ? (
 		<FormBox>
@@ -66,7 +66,11 @@ const CastPage = () => {
 								}}
 							>
 								<Stack spacing={2}>
-									<Typography variant='h5' fontWeight='700'>
+									<Typography
+										fontFamily='inherit'
+										variant='h5'
+										fontWeight='700'
+									>
 										{`${person.name} (${
 											person.birthday && person.birthday.split('-')[0]
 										}`}
@@ -74,14 +78,17 @@ const CastPage = () => {
 											` - ${person.deathday && person.deathday.split('-')[0]}`}
 										{')'}
 									</Typography>
-									<Typography sx={{ ...uiConfigs.style.typoLines(10) }}>
+									<Typography
+										fontFamily='inherit'
+										sx={{ ...uiConfigs.style.typoLines(10) }}
+									>
 										{person.biography}
 									</Typography>
 								</Stack>
 							</Box>
 						</Box>
-						<Container header='medias'>
-							<PersonMediaGrid personId={personId} />
+						<Container header='movies'>
+							<PersonMoviesGrid personId={personId} />
 						</Container>
 					</Box>
 				</>
@@ -90,4 +97,4 @@ const CastPage = () => {
 	);
 };
 
-export default CastPage;
+export default PersonPage;

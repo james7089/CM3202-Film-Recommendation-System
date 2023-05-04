@@ -34,7 +34,7 @@ const MediaItem = ({ media, mediaType }) => {
 		<Link
 			to={
 				mediaType !== tmdbConfigs.mediaType.person
-					? routesGen.mediaDetail(mediaType, media.mediaId || media.id)
+					? routesGen.moviePage(media.mediaId || media.id)
 					: routesGen.person(media.id)
 			}
 		>
@@ -99,6 +99,7 @@ const MediaItem = ({ media, mediaType }) => {
 
 								<Typography
 									variant='body1'
+									fontFamily='inherit'
 									fontWeight='700'
 									sx={{
 										fontSize: '1rem',
@@ -113,7 +114,7 @@ const MediaItem = ({ media, mediaType }) => {
 				)}
 				{/* movie item */}
 
-				{/* people item */}
+				{/* cast item */}
 				{mediaType === tmdbConfigs.mediaType.person && (
 					<Box
 						sx={{
@@ -125,12 +126,15 @@ const MediaItem = ({ media, mediaType }) => {
 							backgroundColor: 'rgba(0,0,0,0.6)',
 						}}
 					>
-						<Typography sx={{ ...uiConfigs.style.typoLines(1, 'left') }}>
+						<Typography
+							fontFamily='inherit'
+							sx={{ ...uiConfigs.style.typoLines(1, 'left') }}
+						>
 							{media.name}
 						</Typography>
 					</Box>
 				)}
-				{/* people item */}
+				{/* cast item */}
 			</Box>
 		</Link>
 	);

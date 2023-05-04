@@ -1,7 +1,7 @@
 const routesGen = {
     home: "/",
     mediaList: (type) => `/${type}`,
-    mediaDetail: (type, id) => `/${type}/${id}`,
+    moviePage: (id) => `/movie/${id}`,
     mediaSearch: "/search",
     person: (id) => `/person/${id}`,
     favoriteList: "/favorites",

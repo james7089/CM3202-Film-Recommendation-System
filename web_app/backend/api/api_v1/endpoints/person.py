@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Request, Response
 from tmdb.tmdb_api import TmdbApi;
 
-router = APIRouter(prefix="/cast", tags=["Cast"])
+router = APIRouter(prefix="/person", tags=["Person"])
 
 @router.get("/{personId}")
 async def getList(req: Request, res: Response):

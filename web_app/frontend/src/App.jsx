@@ -4,6 +4,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import MoviePage from './pages/MoviePage';
+import PersonPage from './pages/PersonPage';
 import RequireAuth from './components/auth/RequireAuth';
 import User from './components/user/User';
 
@@ -20,6 +21,7 @@ const App = () => {
 				{/* protected routes */}
 				<Route element={<RequireAuth />}>
 					<Route path='movie/:movieId' element={<MoviePage />} />
+					<Route path='person/:personId' element={<PersonPage />} />
 					<Route path='homePage' element={<HomePage />} />
 					<Route path='user' element={<User />} />
 				</Route>

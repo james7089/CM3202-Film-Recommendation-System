@@ -1,16 +1,16 @@
 import { apiSlice } from './apiSlice';
 
-export const castApiSlice = apiSlice.injectEndpoints({
+export const personApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getDetail: builder.query({
 			query: ({ personId }) => ({
-				url: `/cast/${personId}`,
+				url: `/person/${personId}`,
 				keepUnusedDataFor: 5,
 			}),
 		}),
 		getMovies: builder.query({
 			query: ({ personId }) => ({
-				url: `/cast/${personId}/movies`,
+				url: `/person/${personId}/movies`,
                 keepUnusedDataFor: 5,
 			}),
 		}),
@@ -20,4 +20,4 @@ export const castApiSlice = apiSlice.injectEndpoints({
 export const {
     useLazyGetDetailQuery,
     useLazyGetMoviesQuery,
-} = castApiSlice;
+} = personApiSlice;

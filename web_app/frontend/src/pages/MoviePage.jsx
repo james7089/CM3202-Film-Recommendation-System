@@ -1,7 +1,7 @@
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import { Box, Button, Chip, Divider, Stack, Typography } from '@mui/material';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import CircularRate from '../components/common/CircularRate';
@@ -12,8 +12,6 @@ import tmdbConfigs from '../configs/tmdb.configs';
 import { useLazyGetDetailsQuery } from '../redux/features/movieApiSlice';
 
 import CastSlide from '../components/common/CastSlide';
-import MediaVideosSlide from '../components/common/MediaVideosSlide';
-import BackdropSlide from '../components/common/BackdropSlide';
 import RecommendSlide from '../components/common/RecommendSlide';
 import MediaSlide from '../components/common/MediaSlide';
 import FormBox from '../components/common/FormBox';
@@ -23,8 +21,6 @@ const MoviePage = () => {
 
 	const [movie, setMovie] = useState();
 	const [genres, setGenres] = useState([]);
-
-	const videoRef = useRef(null);
 
 	const [fetchDetails, { isLoading }] = useLazyGetDetailsQuery();
 
@@ -108,12 +104,13 @@ const MoviePage = () => {
 								<Typography
 									variant='h4'
 									fontSize={{ xs: '2rem', md: '2rem', lg: '4rem' }}
+									fontFamily='inherit'
 									fontWeight='700'
 									sx={{ ...uiConfigs.style.typoLines(2, 'left') }}
 								>
-									{`${movie.title || movie.name} ${
+									{`${movie.title || movie.name} (${
 										movie.release_date.split('-')[0]
-									}`}
+									})`}
 								</Typography>
 								{/* title */}
 
@@ -139,7 +136,7 @@ const MoviePage = () => {
 								{/* overview */}
 								<Typography
 									variant='body1'
-									sx={{ ...uiConfigs.style.typoLines(5) }}
+									sx={{ ...uiConfigs.style.typoLines(5), fontFamily: 'inherit' }}
 								>
 									{movie.overview}
 								</Typography>
@@ -149,10 +146,10 @@ const MoviePage = () => {
 								<Stack direction='row' spacing={1}>
 									<Button
 										variant='contained'
-										sx={{ width: 'max-content' }}
+										sx={{ width: 'max-content', fontFamily: 'inherit' }}
 										size='large'
 										startIcon={<PlayArrowIcon />}
-										onClick={() => videoRef.current.scrollIntoView()}
+										onClick={console.log(1)}
 									>
 										watch trailer
 									</Button>
@@ -170,22 +167,6 @@ const MoviePage = () => {
 					</Box>
 				</Box>
 				{/* movie content */}
-
-				{/* movie videos */}
-				<div ref={videoRef} style={{ paddingTop: '2rem' }}>
-					<Container header='Videos'>
-						<MediaVideosSlide videos={[...movie.videos.results].splice(0, 5)} />
-					</Container>
-				</div>
-				{/* movie videos */}
-
-				{/* movie backdrop */}
-				{movie.images.backdrops.length > 0 && (
-					<Container header='backdrops'>
-						<BackdropSlide backdrops={movie.images.backdrops} />
-					</Container>
-				)}
-				{/* movie backdrop */}
 
 				{/* movie recommendation */}
 				<Container header='you may also like'>
