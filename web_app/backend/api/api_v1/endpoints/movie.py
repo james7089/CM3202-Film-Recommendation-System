@@ -27,10 +27,6 @@ async def getList(req: Request, res: Response):
     
     res['credits'] = await TmdbApi.movie_credits(movieId)
 
-    res['videos'] = await TmdbApi.movie_videos(movieId)
-    
-    res['recommend'] = await TmdbApi.movie_recommend(movieId)
-
     res['images'] = await TmdbApi.movie_images(movieId)
 
     return res

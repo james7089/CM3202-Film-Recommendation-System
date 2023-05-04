@@ -27,10 +27,6 @@ class UserUpdate(BaseModel):
 
     email: Optional[EmailStr] = None
 
-    # User information
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-
     #Refresh token
     refresh_tokens: Optional[list[str]] = []
 

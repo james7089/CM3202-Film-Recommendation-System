@@ -18,7 +18,6 @@ from handlers.jwt_config import jwt_exception_handler
 from api.api_v1.endpoints.auth import router as AuthRouter
 from api.api_v1.endpoints.movie import router as MovieRouter
 from api.api_v1.endpoints.person import router as PersonRouter
-from api.api_v1.endpoints.mail import router as MailRouter
 from api.api_v1.endpoints.register import router as RegisterRouter
 from api.api_v1.endpoints.user import router as UserRouter
 
@@ -31,7 +30,6 @@ app.add_exception_handler(AuthJWTException, jwt_exception_handler)
 app.include_router(AuthRouter)
 app.include_router(MovieRouter)
 app.include_router(PersonRouter)
-app.include_router(MailRouter)
 app.include_router(RegisterRouter)
 app.include_router(UserRouter)
 

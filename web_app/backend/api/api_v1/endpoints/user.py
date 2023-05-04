@@ -10,9 +10,6 @@ from api.dependencies import current_user
 
 router = APIRouter(prefix="/user", tags=["User"])
 
-#user: User = Depends(current_user)
-#response_model=UserOut
-
 @router.get("", response_model=UserOut)
 async def get_user(user: User = Depends(current_user)):
     """Returns the current user"""
