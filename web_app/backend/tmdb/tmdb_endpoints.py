@@ -6,7 +6,7 @@ class TmdbEndpoints:
         return get_url(f"movie/{movie_category}", {"page": page})
 
     @staticmethod
-    def movie_detail(movie_id):
+    def movie_details(movie_id):
         return get_url(f"movie/{movie_id}")
 
     @staticmethod

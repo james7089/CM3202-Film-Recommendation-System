@@ -6,7 +6,7 @@ const MainLayout = () => {
 	return (
 		<>
 			{/* header */}
-			<ResponsiveAppBar />
+			<ResponsiveAppBar position="sticky"/>
 			{/* header */}
 
 			{/* main */}

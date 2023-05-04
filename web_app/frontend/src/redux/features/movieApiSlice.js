@@ -6,13 +6,24 @@ export const movieApiSlice = apiSlice.injectEndpoints({
 			query: () => '/movie/genres',
 			keepUnusedDataFor: 5,
 		}),
-		getLists: builder.query({
+		getList: builder.query({
 			query: ({ movieCategory, page }) => ({
 				url: `/movie/${movieCategory}`,
 				params: { page },
+				keepUnusedDataFor: 5,
+			}),
+		}),
+		getDetails: builder.query({
+			query: ({ movieId }) => ({
+				url: `/movie/details/${movieId}`,
+				keepUnusedDataFor: 5,
 			}),
 		}),
 	}),
 });
 
-export const { useGetGenresQuery, useLazyGetListsQuery } = movieApiSlice;
+export const {
+	useGetGenresQuery,
+	useLazyGetListQuery,
+	useLazyGetDetailsQuery,
+} = movieApiSlice;

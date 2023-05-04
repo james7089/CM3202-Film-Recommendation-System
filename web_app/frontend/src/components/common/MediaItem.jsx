@@ -25,9 +25,7 @@ const MediaItem = ({ media, mediaType }) => {
 			)
 		);
 
-		if (mediaType === tmdbConfigs.mediaType.movie) {
-			setReleaseDate(media.release_date && media.release_date.split('-')[0]);
-		}
+		setReleaseDate(media.release_date && media.release_date.split('-')[0]);
 
 		setRate(media.vote_average || media.mediaRate);
 	}, [media, mediaType]);

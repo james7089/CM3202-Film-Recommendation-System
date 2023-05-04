@@ -17,3 +17,20 @@ async def getList(req: Request, res: Response):
     
     res = await TmdbApi.movie_list(movieCategory, page)
     return res
+
+@router.get("/details/{movieId}")
+async def getList(req: Request, res: Response):
+    """Gets details of a film"""
+    movieId = req.path_params['movieId']
+    
+    res = await TmdbApi.movie_details(movieId)
+    
+    res['credits'] = await TmdbApi.movie_credits(movieId)
+
+    res['videos'] = await TmdbApi.movie_videos(movieId)
+    
+    res['recommend'] = await TmdbApi.movie_recommend(movieId)
+
+    res['images'] = await TmdbApi.movie_images(movieId)
+
+    return res

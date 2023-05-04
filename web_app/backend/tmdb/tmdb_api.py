@@ -7,8 +7,8 @@ class TmdbApi:
         return await get(tmdb_endpoints.movie_list(movie_category, page))
 
     @staticmethod
-    async def movie_detail(movie_id):
-        return await get(tmdb_endpoints.movie_detail(movie_id))
+    async def movie_details(movie_id):
+        return await get(tmdb_endpoints.movie_details(movie_id))
 
     @staticmethod
     async def movie_genres():

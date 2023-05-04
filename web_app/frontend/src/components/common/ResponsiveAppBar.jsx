@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ background: '#7393B3'}}>
+    <AppBar position="sticky" sx={{ background: '#7393B3'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Avatar src={Logo} sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

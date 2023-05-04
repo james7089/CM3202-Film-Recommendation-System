@@ -1,26 +1,23 @@
 import { useEffect, useState } from 'react';
 import { SwiperSlide } from 'swiper/react';
-import { useLazyGetListsQuery } from '../../redux/features/movieApiSlice';
+import { useLazyGetListQuery } from '../../redux/features/movieApiSlice';
 import AutoSwiper from './AutoSwiper';
-import { toast } from 'react-toastify';
 import MediaItem from './MediaItem';
 
 const MediaSlide = ({ mediaType, movieCategory }) => {
 	const [medias, setMedias] = useState([]);
 
-	const [fetchLists] = useLazyGetListsQuery();
+	const [fetchList] = useLazyGetListQuery();
 
 	useEffect(() => {
 		const getMedias = async () => {
-			const response = await fetchLists({ movieCategory, page: 1 }).unwrap();
+			const response = await fetchList({ movieCategory, page: 1 }).unwrap();
 
 			if (response) setMedias(response.results);
 		};
 
 		getMedias();
-	}, [mediaType, movieCategory]);
-
-	console.log(medias)
+	}, [mediaType, movieCategory, fetchList]);
 
 	return (
 		<AutoSwiper>
