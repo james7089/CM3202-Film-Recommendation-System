@@ -1,5 +1,4 @@
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import tmdbConfigs from '../../configs/tmdb.configs';
@@ -28,6 +27,7 @@ const MediaItem = ({ media, mediaType }) => {
 		setReleaseDate(media.release_date && media.release_date.split('-')[0]);
 
 		setRate(media.vote_average || media.mediaRate);
+
 	}, [media, mediaType]);
 
 	return (
@@ -62,21 +62,6 @@ const MediaItem = ({ media, mediaType }) => {
 								left: 0,
 								backgroundImage:
 									'linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0))',
-							}}
-						/>
-						<Button
-							className='media-play-btn'
-							variant='contained'
-							startIcon={<PlayArrowIcon />}
-							sx={{
-								display: { xs: 'none', md: 'flex' },
-								opacity: 0,
-								transition: 'all 0.3s ease',
-								position: 'absolute',
-								top: '50%',
-								left: '50%',
-								transform: 'translate(-50%, -50%)',
-								'& .MuiButton-startIcon': { marginRight: '-4px' },
 							}}
 						/>
 						<Box

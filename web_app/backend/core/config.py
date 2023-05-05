@@ -25,14 +25,4 @@ class Settings(BaseModel):
     
     SALT = config("SALT").encode()
 
-   # FastMail SMTP server settings
-    MAIL_CONSOLE = config("MAIL_CONSOLE", default=False, cast=bool)
-    MAIL_SERVER = config("MAIL_SERVER", default="smtp.myserver.io")
-    MAIL_PORT = config("MAIL_PORT", default=587, cast=int)
-    MAIL_USERNAME= config("MAIL_USERNAME", default="")
-    MAIL_PASSWORD = config("MAIL_PASSWORD", default="")
-    MAIL_SENDER = config("MAIL_SENDER", default="noreply@myserver.io")
-
-    TESTING = config("TESTING", default=False, cast=bool)
-
 settings = Settings()

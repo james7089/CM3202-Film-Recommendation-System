@@ -1,6 +1,13 @@
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-
-import { Box, Button, Chip, Divider, Stack, Typography } from '@mui/material';
+import React from 'react';
+import StarIcon from '@mui/icons-material/Star';
+import {
+	Box,
+	Chip,
+	Divider,
+	Stack,
+	Typography,
+	Rating,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -10,10 +17,14 @@ import Container from '../components/common/Container';
 import uiConfigs from '../configs/ui.configs';
 import tmdbConfigs from '../configs/tmdb.configs';
 import { useLazyGetDetailsQuery } from '../redux/features/movieApiSlice';
+import {
+	useLazyGetUserRatingQuery,
+	useSetUserRatingMutation,
+} from '../redux/features/ratingApiSlice';
 
 import CastSlide from '../components/common/CastSlide';
-import RecommendSlide from '../components/common/RecommendSlide';
-import MediaSlide from '../components/common/MediaSlide';
+/* import RecommendSlide from '../components/common/RecommendSlide';
+import MediaSlide from '../components/common/MediaSlide'; */
 import FormBox from '../components/common/FormBox';
 
 const MoviePage = () => {
@@ -21,8 +32,13 @@ const MoviePage = () => {
 
 	const [movie, setMovie] = useState();
 	const [genres, setGenres] = useState([]);
+	const [value, setValue] = useState(0);
+	const [newRating, setNewRating] = useState();
 
 	const [fetchDetails, { isLoading }] = useLazyGetDetailsQuery();
+	
+	const [fetchUserRating] = useLazyGetUserRatingQuery();
+	const [postRate] = useSetUserRatingMutation();
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -30,7 +46,7 @@ const MoviePage = () => {
 			const response = await fetchDetails({ movieId }).unwrap();
 
 			if (response) {
-				const genres = [...response.genres]
+				const genres = [...response.genres];
 				setMovie(response);
 				setGenres(genres.splice(0, 2));
 			}
@@ -38,6 +54,29 @@ const MoviePage = () => {
 
 		getMovieDetails();
 	}, [movieId, fetchDetails]);
+	
+	useEffect(() => {
+		const getUserRating = async () => {
+			const response = await fetchUserRating({ movieId });
+			if (response) {
+				const rating = response.data
+				setValue(rating);
+			}
+		};
+
+		getUserRating();
+	}, [movieId, fetchUserRating]);
+	
+	useEffect(() => {
+		const setUserRate = async () => {
+			if (newRating)  {
+				await postRate({ movieId, newRating });
+			}
+		};
+
+		setUserRate();
+	}, [movieId, newRating, postRate]);
+
 
 	return isLoading ? (
 		<FormBox>
@@ -114,11 +153,25 @@ const MoviePage = () => {
 								</Typography>
 								{/* title */}
 
-								{/* rate and genres */}
+								{/* average rating, user rating and genres */}
 								<Stack direction='row' spacing={1} alignItems='center'>
-									{/* rate */}
+									{/* average rating */}
 									<CircularRate value={movie.vote_average} />
-									{/* rate */}
+									{/* average rating */}
+									<Divider orientation='vertical' />
+									{/* user rating */}
+									<Rating
+										name='simple-controlled'
+										size='large'
+										value={value}
+										emptyIcon={<StarIcon style={{ color: '#fff' }} fontSize="inherit" />}
+										onChange={(event, newValue) => {
+											setValue(newValue)
+											setNewRating(newValue);
+										}}
+									/>
+
+									{/* user rating */}
 									<Divider orientation='vertical' />
 									{/* genres */}
 									{genres.map((genre, index) => (
@@ -131,30 +184,19 @@ const MoviePage = () => {
 									))}
 									{/* genres */}
 								</Stack>
-								{/* rate and genres */}
+								{/* average rating, user rating and genres*/}
 
 								{/* overview */}
 								<Typography
 									variant='body1'
-									sx={{ ...uiConfigs.style.typoLines(5), fontFamily: 'inherit' }}
+									sx={{
+										...uiConfigs.style.typoLines(5),
+										fontFamily: 'inherit',
+									}}
 								>
 									{movie.overview}
 								</Typography>
 								{/* overview */}
-
-								{/* buttons */}
-								<Stack direction='row' spacing={1}>
-									<Button
-										variant='contained'
-										sx={{ width: 'max-content', fontFamily: 'inherit' }}
-										size='large'
-										startIcon={<PlayArrowIcon />}
-										onClick={console.log(1)}
-									>
-										watch trailer
-									</Button>
-								</Stack>
-								{/* buttons */}
 
 								{/* cast */}
 								<Container header='Cast'>
@@ -170,7 +212,7 @@ const MoviePage = () => {
 
 				{/* movie recommendation */}
 				<Container header='you may also like'>
-					{movie.recommend.length > 0 && (
+					{/* {movie.recommend.length > 0 && (
 						<RecommendSlide movies={movie.recommend} />
 					)}
 					{movie.recommend.length === 0 && (
@@ -178,7 +220,7 @@ const MoviePage = () => {
 							mediaType={tmdbConfigs.mediaType.movie}
 							movieCategory={tmdbConfigs.movieCategory.top_rated}
 						/>
-					)}
+					)} */}
 				</Container>
 				{/* movie recommendation */}
 			</Box>

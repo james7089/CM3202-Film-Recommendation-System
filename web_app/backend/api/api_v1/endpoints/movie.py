@@ -1,3 +1,7 @@
+"""
+Movie router
+"""
+
 from fastapi import APIRouter, HTTPException, Request, Response
 from tmdb.tmdb_api import TmdbApi;
 

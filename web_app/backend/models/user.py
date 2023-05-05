@@ -5,11 +5,18 @@ User models
 # pylint: disable=too-few-public-methods
 
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from beanie import Document, Indexed
 from beanie.operators import ElemMatch
 from pydantic import BaseModel, EmailStr
+
+class MovieRating(BaseModel):
+    movie_id: str
+    rating: int
+
+    class Config:
+        orm_mode = True
 
 
 class UserAuth(BaseModel):
@@ -45,26 +52,7 @@ class User(Document, UserOut):
     """User DB representation"""
 
     password: str
-    email_confirmed_at: Optional[datetime] = None
-
-    def __repr__(self) -> str:
-        return f"<User {self.email}>"
-
-    def __str__(self) -> str:
-        return self.email
-
-    def __hash__(self) -> int:
-        return hash(self.email)
-
-    def __eq__(self, other: object) -> bool:
-        if isinstance(other, User):
-            return self.email == other.email
-        return False
-
-    @property
-    def created(self) -> datetime:
-        """Datetime user was created from ID"""
-        return self.id.generation_time
+    movie_ratings: List[MovieRating] = []
 
     @classmethod
     async def by_email(cls, email: str) -> "User":

@@ -20,6 +20,7 @@ from api.api_v1.endpoints.movie import router as MovieRouter
 from api.api_v1.endpoints.person import router as PersonRouter
 from api.api_v1.endpoints.register import router as RegisterRouter
 from api.api_v1.endpoints.user import router as UserRouter
+from api.api_v1.endpoints.rating import router as RatingRouter
 
 app = FastAPI(debug=True)
 
@@ -32,6 +33,7 @@ app.include_router(MovieRouter)
 app.include_router(PersonRouter)
 app.include_router(RegisterRouter)
 app.include_router(UserRouter)
+app.include_router(RatingRouter)
 
 @app.on_event("startup")
 async def app_init():
