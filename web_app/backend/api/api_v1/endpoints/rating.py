@@ -3,9 +3,11 @@ Rating router
 """
 
 from fastapi import APIRouter, Depends, Request, Response
+import asyncio
 
 from models.user import User, MovieRating
 from api.dependencies import current_user
+from api.dependencies import getMovieDetails
 
 router = APIRouter(prefix="/rating", tags=["Rating"])
 
@@ -33,3 +35,12 @@ async def rate_movie(req: Request, user: User = Depends(current_user)):
     user.movie_ratings = new_movie_ratings_array + [movie_rating]
     await user.save()
     return Response(status_code=200)
+
+@router.get("/rated/movies")
+async def get_user(res: Response, user: User = Depends(current_user)):
+    """Returns rated movies"""
+    rated = [mr.movie_id for mr in user.movie_ratings]
+    
+    res = await asyncio.gather(*map(getMovieDetails, rated))
+    
+    return res

@@ -31,8 +31,8 @@ class TmdbApi:
         return await get(tmdb_endpoints.movie_recommend(movie_id))
 
     @staticmethod
-    async def movie_search(query, page):
-        return await get(tmdb_endpoints.movie_search(query, page))
+    async def search(mediaType, query, page):
+        return await get(tmdb_endpoints.search(mediaType, query, page))
 
     @staticmethod
     async def person_detail(person_id):

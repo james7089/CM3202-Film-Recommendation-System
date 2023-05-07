@@ -18,9 +18,12 @@ from handlers.jwt_config import jwt_exception_handler
 from api.api_v1.endpoints.auth import router as AuthRouter
 from api.api_v1.endpoints.movie import router as MovieRouter
 from api.api_v1.endpoints.person import router as PersonRouter
-from api.api_v1.endpoints.register import router as RegisterRouter
-from api.api_v1.endpoints.user import router as UserRouter
 from api.api_v1.endpoints.rating import router as RatingRouter
+from api.api_v1.endpoints.register import router as RegisterRouter
+from api.api_v1.endpoints.search import router as SearchRouter
+from api.api_v1.endpoints.user import router as UserRouter
+from api.api_v1.endpoints.watch import router as WatchRouter
+
 
 app = FastAPI(debug=True)
 
@@ -31,9 +34,12 @@ app.add_exception_handler(AuthJWTException, jwt_exception_handler)
 app.include_router(AuthRouter)
 app.include_router(MovieRouter)
 app.include_router(PersonRouter)
-app.include_router(RegisterRouter)
-app.include_router(UserRouter)
 app.include_router(RatingRouter)
+app.include_router(RegisterRouter)
+app.include_router(SearchRouter)
+app.include_router(UserRouter)
+app.include_router(WatchRouter)
+
 
 @app.on_event("startup")
 async def app_init():

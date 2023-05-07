@@ -1,5 +1,7 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import {
 	Box,
 	Chip,
@@ -21,24 +23,47 @@ import {
 	useLazyGetUserRatingQuery,
 	useSetUserRatingMutation,
 } from '../redux/features/ratingApiSlice';
+import {
+	useLazyGetMovieWatchValueQuery,
+	useSetMovieWatchValueMutation,
+	useDeleteMovieWatchValueMutation,
+} from '../redux/features/watchListApiSlice';
 
 import CastSlide from '../components/common/CastSlide';
 /* import RecommendSlide from '../components/common/RecommendSlide';
 import MediaSlide from '../components/common/MediaSlide'; */
 import FormBox from '../components/common/FormBox';
 
+const StyledRating = styled(Rating)({
+	'& .MuiRating-iconFilled': {
+	  color: '#3297FD',
+	},
+	'& .MuiRating-iconHover': {
+	  color: '#7393B3',
+	},
+  });
+
 const MoviePage = () => {
 	const { movieId } = useParams();
 
 	const [movie, setMovie] = useState();
 	const [genres, setGenres] = useState([]);
-	const [value, setValue] = useState(0);
+	
+	const [ratingValue, setRatingValue] = useState(0);
 	const [newRating, setNewRating] = useState();
+	
+	const [watchValue, setWatchValue] = useState(0);
+	const [newWatchValue, setNewWatchValue] = useState();
+
 
 	const [fetchDetails, { isLoading }] = useLazyGetDetailsQuery();
 	
 	const [fetchUserRating] = useLazyGetUserRatingQuery();
+	const [fetchWatcValue] = useLazyGetMovieWatchValueQuery();
+	
 	const [postRate] = useSetUserRatingMutation();
+	const [postWatchValue] = useSetMovieWatchValueMutation();
+	const [deleteWatchValue] = useDeleteMovieWatchValueMutation();
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
@@ -60,12 +85,24 @@ const MoviePage = () => {
 			const response = await fetchUserRating({ movieId });
 			if (response) {
 				const rating = response.data
-				setValue(rating);
+				setRatingValue(rating);
 			}
 		};
 
 		getUserRating();
 	}, [movieId, fetchUserRating]);
+	
+	useEffect(() => {
+		const getWatchValue= async () => {
+			const response = await fetchWatcValue({ movieId });
+			if (response) {
+				const watchValue = response.data
+				setWatchValue(watchValue);
+			}
+		};
+
+		getWatchValue();
+	}, [movieId, fetchWatcValue]);
 	
 	useEffect(() => {
 		const setUserRate = async () => {
@@ -76,6 +113,18 @@ const MoviePage = () => {
 
 		setUserRate();
 	}, [movieId, newRating, postRate]);
+	
+	useEffect(() => {
+		const setMovieWatchValue = async () => {
+			if (newWatchValue)  {
+				await postWatchValue({ movieId, newWatchValue });
+			} else if(!newWatchValue) {
+				await deleteWatchValue({ movieId });
+			}
+		};
+
+		setMovieWatchValue();
+	}, [movieId, newWatchValue, postWatchValue]);
 
 
 	return isLoading ? (
@@ -153,8 +202,8 @@ const MoviePage = () => {
 								</Typography>
 								{/* title */}
 
-								{/* average rating, user rating and genres */}
-								<Stack direction='row' spacing={1} alignItems='center'>
+								{/* average rating, user rating, watch list, and genres */}
+								<Stack direction='row' spacing={1.5} alignItems='center'>
 									{/* average rating */}
 									<CircularRate value={movie.vote_average} />
 									{/* average rating */}
@@ -163,15 +212,30 @@ const MoviePage = () => {
 									<Rating
 										name='simple-controlled'
 										size='large'
-										value={value}
+										value={ratingValue}
 										emptyIcon={<StarIcon style={{ color: '#fff' }} fontSize="inherit" />}
 										onChange={(event, newValue) => {
-											setValue(newValue)
+											setRatingValue(newValue)
 											setNewRating(newValue);
 										}}
 									/>
 
 									{/* user rating */}
+									<Divider orientation='vertical' />
+									{/* watch list */}
+									<StyledRating
+										name='customized-color'
+										size='large'
+										value={watchValue}
+										max={1}
+										icon={<RemoveRedEyeIcon  fontSize="inherit" />}
+										emptyIcon={<RemoveRedEyeIcon style={{ color: '#fff' }} fontSize="inherit" />}
+										onChange={(event, newValue) => {
+											setWatchValue(newValue)
+											setNewWatchValue(newValue);
+										}}
+									/>
+									{/* watch list */}
 									<Divider orientation='vertical' />
 									{/* genres */}
 									{genres.map((genre, index) => (

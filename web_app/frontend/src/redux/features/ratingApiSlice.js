@@ -14,8 +14,13 @@ export const ratingApiSlice = apiSlice.injectEndpoints({
 				params: { newRating },
 			}),
 		}),
+		getUserRated: builder.query({
+			query: () => ({
+				url: '/rating/rated/movies',
+			}),
+		}),
 	}),
 });
 
-export const { useLazyGetUserRatingQuery, useSetUserRatingMutation } =
+export const { useLazyGetUserRatingQuery, useSetUserRatingMutation, useLazyGetUserRatedQuery } =
 	ratingApiSlice;

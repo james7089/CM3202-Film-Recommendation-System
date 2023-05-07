@@ -18,6 +18,13 @@ class MovieRating(BaseModel):
     class Config:
         orm_mode = True
 
+class MovieWatchValue(BaseModel):
+    movie_id: str
+    watch_value: int
+
+    class Config:
+        orm_mode = True
+
 
 class UserAuth(BaseModel):
     """User register and login auth"""
@@ -53,6 +60,7 @@ class User(Document, UserOut):
 
     password: str
     movie_ratings: List[MovieRating] = []
+    watch_list: List[MovieWatchValue] = []
 
     @classmethod
     async def by_email(cls, email: str) -> "User":

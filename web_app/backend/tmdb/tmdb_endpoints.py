@@ -30,8 +30,8 @@ class TmdbEndpoints:
         return get_url(f"movie/{movie_id}/recommendations")
 
     @staticmethod
-    def movie_search(query, page):
-        return get_url(f"search/movie", {"query": query, "page": page})
+    def search(mediaType, query, page):
+        return get_url(f"search/{mediaType}", {"query": query, "page": page})
 
     @staticmethod
     def person_detail(person_id):
