@@ -13,15 +13,19 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from '../../images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/features/authSlice';
 
 const pages = ['Recommendations', 'Search','Watch List', 'Rated'];
-const settings = ['Profile', 'Logout', 'Register'];
+const settings = ['Logout'];
 
 function ResponsiveAppBar() {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 	const navigate = useNavigate();
+
+	const dispatch = useDispatch();
 
 	const handleClick = (page) => {
 		if (page === 'Recommendations') {
@@ -33,6 +37,11 @@ function ResponsiveAppBar() {
 		} else if (page === 'Rated') {
 			navigate('/ratedPage');
 		}
+	};
+	
+	const handleSettingClick = () => {
+		dispatch(logOut())
+		navigate('/loginPage')
 	};
 
 	const handleOpenNavMenu = (event) => {
@@ -171,7 +180,7 @@ function ResponsiveAppBar() {
 							onClose={handleCloseUserMenu}
 						>
 							{settings.map((setting) => (
-								<MenuItem key={setting} onClick={handleCloseUserMenu}>
+								<MenuItem key={setting} onClick={handleSettingClick}>
 									<Typography textAlign='center'>{setting}</Typography>
 								</MenuItem>
 							))}

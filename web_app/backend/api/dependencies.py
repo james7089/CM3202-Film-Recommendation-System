@@ -30,5 +30,7 @@ async def getMovieDetails(movieId):
     details['credits'] = await TmdbApi.movie_credits(movieId)
 
     details['images'] = await TmdbApi.movie_images(movieId)
+    
+    details['recommend'] = await TmdbApi.movie_recommend(movieId)
 
     return details

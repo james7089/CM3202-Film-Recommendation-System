@@ -1,4 +1,4 @@
-import { Box, Stack, Toolbar, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useLazyGetUserRatedQuery } from '../redux/features/ratingApiSlice';
 import RatedGrid from '../components/common/RatedGrid';
@@ -13,7 +13,6 @@ const RatedPage = () => {
 	useEffect(() => {
 		const getRated = async () => {
 			const response = await fetchRated();
-			console.log(response.data);
 			setMovies(response.data);
 		};
 

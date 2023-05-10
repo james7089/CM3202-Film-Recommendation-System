@@ -1,4 +1,4 @@
-import { Box, Stack, Toolbar, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { useLazyGetWatchListQuery } from '../redux/features/watchListApiSlice';
 import RatedGrid from '../components/common/RatedGrid';
@@ -13,7 +13,6 @@ const WatchListPage = () => {
 	useEffect(() => {
 		const getRated = async () => {
 			const response = await fetchWatchList();
-			console.log(response.data);
 			setMovies(response.data);
 		};
 

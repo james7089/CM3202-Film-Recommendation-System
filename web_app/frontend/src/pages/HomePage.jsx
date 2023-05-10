@@ -9,7 +9,12 @@ const HomePage = () => {
 	return (
 		<>
 			<Box marginTop='-4rem' sx={{ ...uiConfigs.style.mainContent }}>
-				<Container header='recommended films'></Container>
+				<Container header='recommended films'>
+				<MediaSlide
+						mediaType={tmdbConfigs.mediaType.movie}
+						movieCategory={0}
+					/>
+				</Container>
 
 				<Container header='popular films'>
 					<MediaSlide

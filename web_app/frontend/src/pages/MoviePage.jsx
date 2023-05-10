@@ -2,14 +2,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import StarIcon from '@mui/icons-material/Star';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import {
-	Box,
-	Chip,
-	Divider,
-	Stack,
-	Typography,
-	Rating,
-} from '@mui/material';
+import { Box, Chip, Divider, Stack, Typography, Rating } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -30,37 +23,36 @@ import {
 } from '../redux/features/watchListApiSlice';
 
 import CastSlide from '../components/common/CastSlide';
-/* import RecommendSlide from '../components/common/RecommendSlide';
-import MediaSlide from '../components/common/MediaSlide'; */
+import RecommendSlide from '../components/common/RecommendSlide';
+import MediaSlide from '../components/common/MediaSlide';
 import FormBox from '../components/common/FormBox';
 
 const StyledRating = styled(Rating)({
 	'& .MuiRating-iconFilled': {
-	  color: '#3297FD',
+		color: '#3297FD',
 	},
 	'& .MuiRating-iconHover': {
-	  color: '#7393B3',
+		color: '#7393B3',
 	},
-  });
+});
 
 const MoviePage = () => {
 	const { movieId } = useParams();
 
 	const [movie, setMovie] = useState();
 	const [genres, setGenres] = useState([]);
-	
+
 	const [ratingValue, setRatingValue] = useState(0);
 	const [newRating, setNewRating] = useState();
-	
+
 	const [watchValue, setWatchValue] = useState(0);
 	const [newWatchValue, setNewWatchValue] = useState();
 
-
 	const [fetchDetails, { isLoading }] = useLazyGetDetailsQuery();
-	
+
 	const [fetchUserRating] = useLazyGetUserRatingQuery();
 	const [fetchWatcValue] = useLazyGetMovieWatchValueQuery();
-	
+
 	const [postRate] = useSetUserRatingMutation();
 	const [postWatchValue] = useSetMovieWatchValueMutation();
 	const [deleteWatchValue] = useDeleteMovieWatchValueMutation();
@@ -79,53 +71,52 @@ const MoviePage = () => {
 
 		getMovieDetails();
 	}, [movieId, fetchDetails]);
-	
+
 	useEffect(() => {
 		const getUserRating = async () => {
 			const response = await fetchUserRating({ movieId });
 			if (response) {
-				const rating = response.data
+				const rating = response.data;
 				setRatingValue(rating);
 			}
 		};
 
 		getUserRating();
 	}, [movieId, fetchUserRating]);
-	
+
 	useEffect(() => {
-		const getWatchValue= async () => {
+		const getWatchValue = async () => {
 			const response = await fetchWatcValue({ movieId });
 			if (response) {
-				const watchValue = response.data
+				const watchValue = response.data;
 				setWatchValue(watchValue);
 			}
 		};
 
 		getWatchValue();
 	}, [movieId, fetchWatcValue]);
-	
+
 	useEffect(() => {
 		const setUserRate = async () => {
-			if (newRating)  {
+			if (newRating) {
 				await postRate({ movieId, newRating });
 			}
 		};
 
 		setUserRate();
 	}, [movieId, newRating, postRate]);
-	
+
 	useEffect(() => {
 		const setMovieWatchValue = async () => {
-			if (newWatchValue)  {
+			if (newWatchValue) {
 				await postWatchValue({ movieId, newWatchValue });
-			} else if(!newWatchValue) {
+			} else if (!newWatchValue) {
 				await deleteWatchValue({ movieId });
 			}
 		};
 
 		setMovieWatchValue();
-	}, [movieId, newWatchValue, postWatchValue]);
-
+	}, [movieId, newWatchValue, postWatchValue, deleteWatchValue]);
 
 	return isLoading ? (
 		<FormBox>
@@ -213,9 +204,12 @@ const MoviePage = () => {
 										name='simple-controlled'
 										size='large'
 										value={ratingValue}
-										emptyIcon={<StarIcon style={{ color: '#fff' }} fontSize="inherit" />}
+										precision={0.5}
+										emptyIcon={
+											<StarIcon style={{ color: '#fff' }} fontSize='inherit' />
+										}
 										onChange={(event, newValue) => {
-											setRatingValue(newValue)
+											setRatingValue(newValue);
 											setNewRating(newValue);
 										}}
 									/>
@@ -228,10 +222,15 @@ const MoviePage = () => {
 										size='large'
 										value={watchValue}
 										max={1}
-										icon={<RemoveRedEyeIcon  fontSize="inherit" />}
-										emptyIcon={<RemoveRedEyeIcon style={{ color: '#fff' }} fontSize="inherit" />}
+										icon={<RemoveRedEyeIcon fontSize='inherit' />}
+										emptyIcon={
+											<RemoveRedEyeIcon
+												style={{ color: '#fff' }}
+												fontSize='inherit'
+											/>
+										}
 										onChange={(event, newValue) => {
-											setWatchValue(newValue)
+											setWatchValue(newValue);
 											setNewWatchValue(newValue);
 										}}
 									/>
@@ -276,15 +275,15 @@ const MoviePage = () => {
 
 				{/* movie recommendation */}
 				<Container header='you may also like'>
-					{/* {movie.recommend.length > 0 && (
-						<RecommendSlide movies={movie.recommend} />
+					{movie.recommend.results.length > 0 && (
+						<RecommendSlide movies={movie.recommend.results} />
 					)}
-					{movie.recommend.length === 0 && (
+					{movie.recommend.results.length === 0 && (
 						<MediaSlide
 							mediaType={tmdbConfigs.mediaType.movie}
 							movieCategory={tmdbConfigs.movieCategory.top_rated}
 						/>
-					)} */}
+					)}
 				</Container>
 				{/* movie recommendation */}
 			</Box>

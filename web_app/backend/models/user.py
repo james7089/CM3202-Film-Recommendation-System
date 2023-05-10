@@ -13,7 +13,7 @@ from pydantic import BaseModel, EmailStr
 
 class MovieRating(BaseModel):
     movie_id: str
-    rating: int
+    rating: float
 
     class Config:
         orm_mode = True

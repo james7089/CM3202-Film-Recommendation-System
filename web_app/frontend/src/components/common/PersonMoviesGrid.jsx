@@ -16,7 +16,6 @@ const PersonMoviesGrid = ({ personId }) => {
 		const getMovies = async () => {
 			const response = await fetchMovies({ personId }).unwrap();
 			const movies = (response.cast).filter(obj => obj.media_type === 'movie');
-			console.log(movies)
 			if (response) {
 				const moviesSorted = movies.sort(
 					(a, b) => getReleaseDate(b) - getReleaseDate(a)
