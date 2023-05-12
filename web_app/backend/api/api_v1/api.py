@@ -21,7 +21,6 @@ from api.api_v1.endpoints.person import router as PersonRouter
 from api.api_v1.endpoints.rating import router as RatingRouter
 from api.api_v1.endpoints.register import router as RegisterRouter
 from api.api_v1.endpoints.search import router as SearchRouter
-from api.api_v1.endpoints.user import router as UserRouter
 from api.api_v1.endpoints.watch import router as WatchRouter
 from api.api_v1.endpoints.gen_user import router as genUserRouter
 from api.api_v1.endpoints.recomendation import router as recommendationRouter
@@ -39,7 +38,6 @@ app.include_router(PersonRouter)
 app.include_router(RatingRouter)
 app.include_router(RegisterRouter)
 app.include_router(SearchRouter)
-app.include_router(UserRouter)
 app.include_router(WatchRouter)
 app.include_router(genUserRouter)
 app.include_router(recommendationRouter)
